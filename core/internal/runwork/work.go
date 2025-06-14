@@ -39,13 +39,6 @@ type Work interface {
 	// Responses are pushed into the Result channel.
 	Process(func(*spb.Record), chan<- *spb.Result)
 
-	// Sentinel returns the value passed to NewSentinel, or nil.
-	//
-	// This is used as a synchronization mechanism: by pushing a Sentinel
-	// into the work stream and waiting to receive it, one can wait until all
-	// work buffered by a certain time has been processed.
-	Sentinel() any
-
 	// DebugInfo returns a short string describing the work
 	// that can be logged for debugging.
 	DebugInfo() string

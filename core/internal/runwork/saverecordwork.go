@@ -41,6 +41,3 @@ func (w *SaveRecordWork) BypassOfflineMode() bool { return false }
 
 // Process implements Work.Process.
 func (w *SaveRecordWork) Process(func(*spb.Record), chan<- *spb.Result) {}
-
-// Sentinel implements Work.Sentinel.
-func (w *SaveRecordWork) Sentinel() any { return nil }
