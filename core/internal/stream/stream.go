@@ -272,6 +272,7 @@ func NewStream(
 		GraphqlClientOrNil: s.graphqlClientOrNil,
 		Logger:             s.logger,
 		Operations:         s.operations,
+		TBHandler:          tbHandler,
 		Run:                s.run,
 		Settings:           s.settings,
 	}
@@ -314,7 +315,6 @@ func NewStream(
 				GpuResourceManager: params.GPUResourceManager,
 				GraphqlClient:      s.graphqlClientOrNil,
 			}),
-			TBHandler:       tbHandler,
 			TerminalPrinter: terminalPrinter,
 		},
 	)
@@ -330,7 +330,6 @@ func NewStream(
 			FileTransferStats:   fileTransferStats,
 			FileWatcher:         fileWatcher,
 			RunfilesUploader:    runfilesUploaderOrNil,
-			TBHandler:           tbHandler,
 			Peeker:              peeker,
 			StreamRun:           s.run,
 			RunSummary:          runsummary.New(),
