@@ -18,7 +18,6 @@ import (
 	"github.com/wandb/wandb/core/internal/randomid"
 	"github.com/wandb/wandb/core/internal/runfiles"
 	"github.com/wandb/wandb/core/internal/runsummary"
-	"github.com/wandb/wandb/core/internal/runupserter"
 	"github.com/wandb/wandb/core/internal/runwork"
 	"github.com/wandb/wandb/core/internal/sentry_ext"
 	"github.com/wandb/wandb/core/internal/settings"
@@ -71,6 +70,9 @@ type Stream struct {
 
 	// reader is the reader for the stream
 	reader *Reader
+
+	// recordIngester turns Records into Work.
+	recordIngester *RecordIngester
 
 	// handler is the handler for the stream
 	handler *Handler
@@ -264,6 +266,16 @@ func NewStream(
 		s.logger,
 	)
 
+	s.recordIngester = &RecordIngester{
+		ExtraWork:          s.runWork,
+		FeatureProvider:    s.featureProvider,
+		GraphqlClientOrNil: s.graphqlClientOrNil,
+		Logger:             s.logger,
+		Operations:         s.operations,
+		Run:                s.run,
+		Settings:           s.settings,
+	}
+
 	mailbox := mailbox.New()
 	switch {
 	case s.settings.IsSync():
@@ -428,32 +440,10 @@ func (s *Stream) Start() {
 	s.logger.Info("stream: started", "id", s.settings.GetRunID())
 }
 
-// HandleRecord handles the given record by sending it to the stream's handler.
+// HandleRecord ingests a record from the client.
 func (s *Stream) HandleRecord(record *spb.Record) {
 	s.logger.Debug("handling record", "record", record.GetRecordType())
-
-	var work runwork.Work
-
-	if record.GetRun() != nil {
-		work = &runupserter.RunUpdateWork{
-			Record: record,
-
-			StreamRunUpserter: s.run,
-
-			Settings:           s.settings,
-			BeforeRunEndCtx:    s.runWork.BeforeEndCtx(),
-			Operations:         s.operations,
-			FeatureProvider:    s.featureProvider,
-			GraphqlClientOrNil: s.graphqlClientOrNil,
-			Logger:             s.logger,
-		}
-	} else {
-		// Legacy style for handling records where the code to process them
-		// lives in handler.go and sender.go directly.
-		work = runwork.WorkFromRecord(record)
-	}
-
-	s.runWork.AddWork(work)
+	s.recordIngester.Ingest(record)
 }
 
 // Close waits for all run messages to be fully processed.
