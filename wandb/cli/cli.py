@@ -2383,12 +2383,7 @@ def ls(path, type):
             )
             latest = next(versions)
             print(
-                "{:<15s}{:<15s}{:>15s} {:<20s}".format(
-                    kind.type,
-                    latest.updated_at,
-                    util.to_human_size(latest.size),
-                    latest.name,
-                )
+                f"{kind.type:<15s}{latest.updated_at:<15s}{util.to_human_size(latest.size):>15s} {latest.name:<20s}"
             )
 
 
