@@ -192,7 +192,6 @@ import random
 import numpy as np
 import tensorflow as tf
 
-
 # Start a run, tracking hyperparameters
 run = wandb.init(
     # set the wandb project where this run will be logged
@@ -443,7 +442,6 @@ from wandb.xgboost import WandbCallback
 import numpy as np
 import xgboost as xgb
 
-
 # setup parameters for xgboost
 param = {
     "objective": "multi:softmax",
@@ -523,7 +521,6 @@ import numpy as np
 from sklearn import datasets
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
-
 
 # load and process data
 wbcd = datasets.load_breast_cancer()
