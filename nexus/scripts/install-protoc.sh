@@ -22,10 +22,12 @@ function get_os_arch {
     fi
 }
 
-LOCALVER=$($HOME/.local/bin/protoc --version | cut -d" " -f2)
-if [ "x$VER" == "x$LOCALVER" ]; then
-    echo "[INFO] install-protoc.sh: Not Updating \"$COMMAND\" (Found version $LOCALVER)"
-    exit 0
+if [ -f "$HOME/.local/bin/protoc" ]; then
+    LOCALVER=$($HOME/.local/bin/protoc --version | cut -d" " -f2)
+    if [ "x$VER" == "x$LOCALVER" ]; then
+        echo "[INFO] install-protoc.sh: Not Updating \"$COMMAND\" (Found version $LOCALVER)"
+        exit 0
+    fi
 fi
 
 OS_ARCH=$(get_os_arch)

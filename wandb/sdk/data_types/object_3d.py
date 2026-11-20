@@ -161,15 +161,21 @@ class Object3D(BatchableMedia):
             if data_or_path["type"] == "lidar/beta":
                 data = {
                     "type": data_or_path["type"],
-                    "vectors": data_or_path["vectors"].tolist()
-                    if "vectors" in data_or_path
-                    else [],
-                    "points": data_or_path["points"].tolist()
-                    if "points" in data_or_path
-                    else [],
-                    "boxes": data_or_path["boxes"].tolist()
-                    if "boxes" in data_or_path
-                    else [],
+                    "vectors": (
+                        data_or_path["vectors"].tolist()
+                        if "vectors" in data_or_path
+                        else []
+                    ),
+                    "points": (
+                        data_or_path["points"].tolist()
+                        if "points" in data_or_path
+                        else []
+                    ),
+                    "boxes": (
+                        data_or_path["boxes"].tolist()
+                        if "boxes" in data_or_path
+                        else []
+                    ),
                 }
             else:
                 raise ValueError(

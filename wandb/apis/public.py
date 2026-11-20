@@ -10,6 +10,7 @@ You might use the Public API to
 
 For more on using the Public API, check out [our guide](https://docs.wandb.com/guides/track/public-api-guide).
 """
+
 import ast
 import datetime
 import io
@@ -3507,7 +3508,7 @@ class PythonMongoishQueryGenerator:
         "Step": "_step",
         "Relative Time (Wall)": "_absolute_runtime",
         "Relative Time (Process)": "_runtime",
-        "Wall Time": "_timestamp"
+        "Wall Time": "_timestamp",
         # "GroupedRuns": "__wb_group_by_all"
     }
     FRONTEND_NAME_MAPPING_REVERSED = {v: k for k, v in FRONTEND_NAME_MAPPING.items()}

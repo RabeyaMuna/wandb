@@ -5,6 +5,7 @@ StreamRecord: All the external state for the internal thread (queues, etc)
 StreamAction: Lightweight record for stream ops for thread safety
 StreamMux: Container for dictionary of stream threads per runid
 """
+
 import functools
 import multiprocessing
 import queue

@@ -113,9 +113,9 @@ def _manifest_json_from_proto(manifest: "ArtifactManifest") -> Dict:
         contents = {
             content.path: {
                 "digest": content.digest,
-                "birthArtifactID": content.birth_artifact_id
-                if content.birth_artifact_id
-                else None,
+                "birthArtifactID": (
+                    content.birth_artifact_id if content.birth_artifact_id else None
+                ),
                 "ref": content.ref if content.ref else None,
                 "size": content.size if content.size is not None else None,
                 "local_path": content.local_path if content.local_path else None,

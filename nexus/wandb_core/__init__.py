@@ -1,4 +1,5 @@
 """W&B Nexus: Calcium-Rich Bones for the SDK."""
+
 __all__ = ("__version__", "get_nexus_path")
 
 from pathlib import Path

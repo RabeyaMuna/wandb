@@ -646,9 +646,11 @@ class ListType(Type):
             if not isinstance(assigned_type, InvalidType):
                 return ListType(
                     assigned_type,
-                    None
-                    if self.params["length"] != wb_type.params["length"]
-                    else self.params["length"],
+                    (
+                        None
+                        if self.params["length"] != wb_type.params["length"]
+                        else self.params["length"]
+                    ),
                 )
 
         return InvalidType()

@@ -1,4 +1,5 @@
 """Storage handler."""
+
 from typing import TYPE_CHECKING, Optional, Sequence, Union
 
 from wandb.sdk.lib.paths import FilePathStr, URIStr

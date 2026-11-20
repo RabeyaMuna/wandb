@@ -1030,22 +1030,24 @@ def create_app(user_ctx=None):
                                 "id": "mock-server-agent-93xy",
                             },
                             "commands": (
-                                json.dumps(
-                                    [
-                                        {
-                                            "type": "run",
-                                            "run_id": f"mocker-sweep-run-x9{ctx['n_sweep_runs']}",
-                                            "args": {
-                                                "a": {"value": ctx["n_sweep_runs"]}
-                                            },
-                                        }
-                                    ]
+                                (
+                                    json.dumps(
+                                        [
+                                            {
+                                                "type": "run",
+                                                "run_id": f"mocker-sweep-run-x9{ctx['n_sweep_runs']}",
+                                                "args": {
+                                                    "a": {"value": ctx["n_sweep_runs"]}
+                                                },
+                                            }
+                                        ]
+                                    )
+                                    if ctx["n_sweep_runs"] <= 4
+                                    else json.dumps([{"type": "exit"}])
                                 )
-                                if ctx["n_sweep_runs"] <= 4
-                                else json.dumps([{"type": "exit"}])
-                            )
-                            if new_run_needed
-                            else "[]",
+                                if new_run_needed
+                                else "[]"
+                            ),
                         }
                     }
                 }
@@ -1209,9 +1211,11 @@ def create_app(user_ctx=None):
                             ctx,
                             collection_name,
                             id_override=_id,
-                            state="COMMITTED"
-                            if "PENDING" not in collection_name
-                            else "PENDING",
+                            state=(
+                                "COMMITTED"
+                                if "PENDING" not in collection_name
+                                else "PENDING"
+                            ),
                         )
                     }
                 }
@@ -1308,9 +1312,11 @@ def create_app(user_ctx=None):
         if "mutation CreateArtifactManifest(" in body["query"]:
             manifest = {
                 "id": "1",
-                "type": "INCREMENTAL"
-                if "incremental" in body.get("variables", {}).get("name", "")
-                else "FULL",
+                "type": (
+                    "INCREMENTAL"
+                    if "incremental" in body.get("variables", {}).get("name", "")
+                    else "FULL"
+                ),
                 "file": {
                     "id": "1",
                     "directUrl": base_url
@@ -1335,9 +1341,11 @@ def create_app(user_ctx=None):
         if "mutation UpdateArtifactManifest(" in body["query"]:
             manifest = {
                 "id": 1,
-                "type": "INCREMENTAL"
-                if "incremental" in body.get("variables", {}).get("name", "")
-                else "FULL",
+                "type": (
+                    "INCREMENTAL"
+                    if "incremental" in body.get("variables", {}).get("name", "")
+                    else "FULL"
+                ),
                 "file": {
                     "id": 1,
                     "directUrl": base_url

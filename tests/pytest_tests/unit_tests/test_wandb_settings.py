@@ -173,9 +173,9 @@ def test_settings_detect_cycle_in_dependencies():
         props = dict(
             api_key={"validator": self._validate_api_key},
             base_url={
-                "hook": lambda _: "https://localhost"
-                if self.is_local
-                else "https://api.wandb.ai",
+                "hook": lambda _: (
+                    "https://localhost" if self.is_local else "https://api.wandb.ai"
+                ),
                 "auto_hook": True,
             },
             is_local={

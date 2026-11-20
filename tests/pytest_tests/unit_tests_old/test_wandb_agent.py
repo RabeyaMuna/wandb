@@ -1,4 +1,5 @@
 """Agent tests"""
+
 import wandb
 
 

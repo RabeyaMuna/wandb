@@ -74,9 +74,11 @@ def test_meta_probe(
     monkeypatch.setattr(
         subprocess,
         "call",
-        lambda cmd, **kwargs: kwargs["stdout"].write("CONDA YAML")
-        if "conda" in cmd
-        else orig_call(cmd, **kwargs),
+        lambda cmd, **kwargs: (
+            kwargs["stdout"].write("CONDA YAML")
+            if "conda" in cmd
+            else orig_call(cmd, **kwargs)
+        ),
     )
     with open("README", "w") as f:
         f.write("Testing")

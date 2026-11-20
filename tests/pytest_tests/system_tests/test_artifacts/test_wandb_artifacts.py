@@ -1052,9 +1052,11 @@ def test_artifact_table_deserialize_timestamp_column():
         timestamp_idx = art["columns"].index("Date Time")
         table = wandb.Table.from_json(art, artifact)
         assert [row[timestamp_idx] for row in table.data] == [
-            datetime.fromtimestamp(row[timestamp_idx] / 1000.0, tz=timezone.utc)
-            if row[timestamp_idx] is not None
-            else None
+            (
+                datetime.fromtimestamp(row[timestamp_idx] / 1000.0, tz=timezone.utc)
+                if row[timestamp_idx] is not None
+                else None
+            )
             for row in art["data"]
         ]
 

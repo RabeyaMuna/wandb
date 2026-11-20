@@ -3468,9 +3468,9 @@ class Api:
                 "digest": digest,
                 "description": description,
                 "aliases": [alias for alias in aliases],
-                "metadata": json.dumps(util.make_safe_for_json(metadata))
-                if metadata
-                else None,
+                "metadata": (
+                    json.dumps(util.make_safe_for_json(metadata)) if metadata else None
+                ),
                 "ttlDurationSeconds": ttl_duration_seconds,
                 "distributedID": distributed_id,
                 "historyStep": history_step,

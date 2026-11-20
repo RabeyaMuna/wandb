@@ -1,4 +1,5 @@
 """Implementation of Google Artifact Registry for wandb launch."""
+
 import logging
 import re
 from typing import Tuple

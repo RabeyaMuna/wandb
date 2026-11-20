@@ -420,13 +420,17 @@ class TerminalEmulator:
         insert = lambda i, c: (out.insert(idxs[i], c), idxs[i:].__iadd__(1))  # noqa
 
         fgs = [int(_defchar.fg)] + [int(line[i].fg) for i in range(line_len)]
-        [
-            insert(i, _get_char(line[int(i)].fg)) for i in np.where(np.diff(fgs))[0]
-        ] if len(set(fgs)) > 1 else None
+        (
+            [insert(i, _get_char(line[int(i)].fg)) for i in np.where(np.diff(fgs))[0]]
+            if len(set(fgs)) > 1
+            else None
+        )
         bgs = [int(_defchar.bg)] + [int(line[i].bg) for i in range(line_len)]
-        [
-            insert(i, _get_char(line[int(i)].bg)) for i in np.where(np.diff(bgs))[0]
-        ] if len(set(bgs)) > 1 else None
+        (
+            [insert(i, _get_char(line[int(i)].bg)) for i in np.where(np.diff(bgs))[0]]
+            if len(set(bgs)) > 1
+            else None
+        )
         attrs = {
             k: [False] + [line[i][k] for i in range(line_len)]
             for k in Char.__slots__[3:]

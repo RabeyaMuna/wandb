@@ -1,4 +1,5 @@
 """Artifact manifest."""
+
 from typing import TYPE_CHECKING, Dict, List, Mapping, Optional
 
 from wandb.sdk.lib.hashutil import HexMD5

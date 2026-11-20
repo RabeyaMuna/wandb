@@ -406,9 +406,11 @@ def _infer_validation_row_processor(
                 lambda ndx, row, key_processor, key: key_processor(
                     ndx,
                     row[key],
-                    row[input_col_name]
-                    if not isinstance(example_input, dict)
-                    else None,
+                    (
+                        row[input_col_name]
+                        if not isinstance(example_input, dict)
+                        else None
+                    ),
                 ),
                 key_processor=key_processors[p_key],
                 key=key,
@@ -457,9 +459,11 @@ def _infer_prediction_row_processor(
                 lambda ndx, row, key_processor, key: key_processor(
                     ndx,
                     row[key],
-                    ndx.get_row().get("val_row").get_row().get(input_col_name)
-                    if not isinstance(example_input, dict)
-                    else None,
+                    (
+                        ndx.get_row().get("val_row").get_row().get(input_col_name)
+                        if not isinstance(example_input, dict)
+                        else None
+                    ),
                 ),
                 key_processor=key_processors[p_key],
                 key=key,

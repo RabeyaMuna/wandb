@@ -62,9 +62,9 @@ class WandbCallback:
         if wandb.run is None:
             self.run = wandb.init(
                 name=self.run_name if self.run_name else trainer.args.name,
-                project=self.project
-                if self.project
-                else trainer.args.project or "YOLOv8",
+                project=(
+                    self.project if self.project else trainer.args.project or "YOLOv8"
+                ),
                 tags=self.tags if self.tags else ["YOLOv8"],
                 config=vars(trainer.args),
                 resume=self.resume if self.resume else None,

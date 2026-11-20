@@ -305,7 +305,9 @@ class SettingsData:
     # _config_dict: Config
     _cuda: str
     _disable_meta: bool  # Do not collect system metadata
-    _disable_service: bool  # Disable wandb-service, spin up internal process the old way
+    _disable_service: (
+        bool  # Disable wandb-service, spin up internal process the old way
+    )
     _disable_setproctitle: bool  # Do not use setproctitle on internal process
     _disable_stats: bool  # Do not collect system metrics
     _disable_viewer: bool  # Prevent early viewer query
@@ -360,8 +362,12 @@ class SettingsData:
     _stats_pid: int  # (internal) base pid for system stats
     _stats_sample_rate_seconds: float
     _stats_samples_to_average: int
-    _stats_join_assets: bool  # join metrics from different assets before sending to backend
-    _stats_neuron_monitor_config_path: str  # path to place config file for neuron-monitor (AWS Trainium)
+    _stats_join_assets: (
+        bool  # join metrics from different assets before sending to backend
+    )
+    _stats_neuron_monitor_config_path: (
+        str  # path to place config file for neuron-monitor (AWS Trainium)
+    )
     _stats_open_metrics_endpoints: Mapping[str, str]  # open metrics endpoint names/urls
     # open metrics filters in one of the two formats:
     # - {"metric regex pattern, including endpoint name as prefix": {"label": "label value regex pattern"}}
@@ -694,9 +700,11 @@ class Settings(SettingsData):
             },
             _offline={
                 "hook": (
-                    lambda _: True
-                    if self.disabled or (self.mode in ("dryrun", "offline"))
-                    else False
+                    lambda _: (
+                        True
+                        if self.disabled or (self.mode in ("dryrun", "offline"))
+                        else False
+                    )
                 ),
                 "auto_hook": True,
             },
@@ -806,9 +814,11 @@ class Settings(SettingsData):
             init_timeout={"value": 90, "preprocessor": lambda x: float(x)},
             is_local={
                 "hook": (
-                    lambda _: self.base_url != "https://api.wandb.ai"
-                    if self.base_url is not None
-                    else False
+                    lambda _: (
+                        self.base_url != "https://api.wandb.ai"
+                        if self.base_url is not None
+                        else False
+                    )
                 ),
                 "auto_hook": True,
             },
@@ -1333,9 +1343,11 @@ class Settings(SettingsData):
                         **default_props[prop],
                         validator=validators,
                         # todo: double-check this logic:
-                        source=Source.RUN
-                        if default_props[prop].get("is_policy", False)
-                        else Source.BASE,
+                        source=(
+                            Source.RUN
+                            if default_props[prop].get("is_policy", False)
+                            else Source.BASE
+                        ),
                     ),
                 )
             else:
