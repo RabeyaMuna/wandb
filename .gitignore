@@ -30,3 +30,8 @@ wandb/proto_check/
 .yea-requirements.txt
 .yeadoc/
 logs/
+# Shell redirection artifacts
+=[0-9]*
+>[0-9]*
+*.tmp
+*.log
